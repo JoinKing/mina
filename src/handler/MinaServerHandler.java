@@ -11,7 +11,7 @@ import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 
-public class DemoServerHandler extends IoHandlerAdapter {
+public class MinaServerHandler extends IoHandlerAdapter {
 
 //	HashMap<IoSession,String>hashMap = new HashMap<>();
 //	List<HashMap>sessions = new ArrayList<>();

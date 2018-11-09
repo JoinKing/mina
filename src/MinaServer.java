@@ -1,7 +1,7 @@
 import java.net.InetSocketAddress;
 
 import filter.CodingProtocol;
-import handler.DemoServerHandler;
+import handler.MinaServerHandler;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
@@ -9,7 +9,10 @@ import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.filter.logging.MdcInjectionFilter;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
-public class DemoServer {
+/**
+ * mina 服务端程序入口
+ */
+public class MinaServer {
 	// 端口号，要求客户端与服务器端一致
 	private static int PORT = 5588;
 
@@ -34,7 +37,7 @@ public class DemoServer {
 			// 读写通道10秒内无操作进入空闲状态
 			acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
 			// 为接收器设置管理服务
-			acceptor.setHandler(new DemoServerHandler());
+			acceptor.setHandler(new MinaServerHandler());
 			// 绑定端口
 			acceptor.bind(new InetSocketAddress(PORT));
 			System.out.println("服务器启动成功... 端口号未：" + PORT);
