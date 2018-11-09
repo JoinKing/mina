@@ -26,8 +26,8 @@ public class MinaServer {
 //			acceptor.getFilterChain().addLast("codec",
 //					new ProtocolCodecFilter(new TextLineCodecFactory(Charset.forName("UTF-8"),
 //							LineDelimiter.WINDOWS.getValue(), LineDelimiter.WINDOWS.getValue())));
-			acceptor.getFilterChain().addLast("mdc",new MdcInjectionFilter());
-			acceptor.getFilterChain().addLast("logger", new LoggingFilter());
+//			acceptor.getFilterChain().addLast("mdc",new MdcInjectionFilter());
+//			acceptor.getFilterChain().addLast("logger", new LoggingFilter());
 			acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new CodingProtocol()));
 			// 自定义的编解码器
 			// acceptor.getFilterChain().addLast("codec", new

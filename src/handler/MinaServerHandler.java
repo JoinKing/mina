@@ -7,15 +7,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import filter.MsgCodeModel;
+import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import utils.EditDataModel;
 
 public class MinaServerHandler extends IoHandlerAdapter {
-
-//	HashMap<IoSession,String>hashMap = new HashMap<>();
-//	List<HashMap>sessions = new ArrayList<>();
-
 	// 从端口接受消息，会响应此方法来对消息进行处理
 	@Override
 	public void messageReceived(IoSession session, Object message) throws Exception {
@@ -27,14 +25,10 @@ public class MinaServerHandler extends IoHandlerAdapter {
 			// 如果客户端发来exit，则关闭该连接
 			session.close(true);
 		}
-		// 向客户端发送消息
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		session.write(sdf.format(date));
-		System.out.println("服务器接受消息成功-0..." + new String(model.getHeader()));
-		System.out.println("服务器接受消息成功-1..." + new String(model.getBody()));
+		System.out.println("收到消息:"+new String(model.getBody()));
 
-		session.write(message);
+		IoBuffer ioBuffer = EditDataModel.init().sendData("0001","","1","",model.getBody());
+		session.write(ioBuffer);
 	}
 
 	// 向客服端发送消息后会调用此方法
@@ -76,7 +70,7 @@ public class MinaServerHandler extends IoHandlerAdapter {
 	@Override
 	public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
 		super.exceptionCaught(session, cause);
-		System.out.println("服务器发送异常..."+ cause.getMessage());
+		System.out.println("服务器异常..."+ cause.getMessage());
 	}
 
 }
