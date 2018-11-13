@@ -1,6 +1,7 @@
 package utils;
 
 import org.apache.mina.core.buffer.IoBuffer;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -61,5 +62,23 @@ public class EditDataModel {
         IoBuffer buffer1 = IoBuffer.allocate(all.length).put(all,0,all.length);
         buffer1.flip();
         return buffer1;
+    }
+
+    public IoBuffer sendData(String sendJson,byte[] body){
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(sendJson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        byte[] jsonByte = jsonObject.toString().getBytes();
+        int jsonByteLength = jsonByte.length;
+        byte[] jsonLengthToByte = ByteUtils.intToByteArray(jsonByteLength);
+        byte[] jsonBody = ByteUtils.unitByteArray(jsonLengthToByte,jsonByte);
+        byte[] all = ByteUtils.unitByteArray(jsonBody,body);
+        IoBuffer buffer1 = IoBuffer.allocate(all.length).put(all,0,all.length);
+        buffer1.flip();
+        return buffer1;
+
     }
 }
