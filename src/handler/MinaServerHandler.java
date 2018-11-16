@@ -7,6 +7,10 @@ import org.apache.mina.core.session.IoSession;
 import persenter.MinaServerHandlerPersenter;
 import utils.log;
 
+/**
+ * @author KING
+ * @create time 2018.11.13
+ */
 public class MinaServerHandler extends BaseIoHandlerAdapter<MinaServerHandlerContract.View, MinaServerHandlerPersenter>implements MinaServerHandlerContract.View {
 	// 从端口接受消息，会响应此方法来对消息进行处理
 	@Override
@@ -19,7 +23,6 @@ public class MinaServerHandler extends BaseIoHandlerAdapter<MinaServerHandlerCon
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
 		super.messageSent(session, message);
-//		session.close(true);//加上这句话实现短连接的效果，向客户端成功发送数据后断开连接
 	}
 
 	// 关闭与客户端的连接时会调用此方法
@@ -59,38 +62,17 @@ public class MinaServerHandler extends BaseIoHandlerAdapter<MinaServerHandlerCon
 	public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
 		super.exceptionCaught(session, cause);
 	}
-
-	/**
-	 * 操作的结果
-	 * @param result
-	 */
-	@Override
-	public void requestAddIoSession(String result) {
-
-	}
-
-	@Override
-	public void requestDeleteIoSession(String result) {
-
-	}
-
-	@Override
-	public void requestSendMessage(String result) {
-
-	}
-
-	@Override
-	public void requestUpdataIoSession(String result) {
-
-	}
-
-	@Override
-	public void requestAllIoSession() {
-
-	}
-
 	@Override
 	protected MinaServerHandlerPersenter createPresenter() {
 		return  new MinaServerHandlerPersenter(this);
+	}
+
+	/**
+	 * 相应结果
+	 * @param result
+	 */
+	@Override
+	public void setResult(String result) {
+		log.e(result);
 	}
 }

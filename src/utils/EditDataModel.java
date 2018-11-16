@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 /**
- * Created by hxb on 2017/11/17.
- *
+ * @author KING
+ * @create time 2018.11.13
  */
 
 public class EditDataModel {

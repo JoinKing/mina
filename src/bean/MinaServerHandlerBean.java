@@ -2,7 +2,13 @@ package bean;
 
 import org.apache.mina.core.session.IoSession;
 
-public class MinaServerHandlerBean {
+import java.io.Serializable;
+
+/**
+ * @author KING
+ * @create time 2018.11.13
+ */
+public class MinaServerHandlerBean implements Serializable {
     private String uId;
     private IoSession session;
 

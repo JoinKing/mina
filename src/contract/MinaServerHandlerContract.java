@@ -2,15 +2,14 @@ package contract;
 
 import base.BaseView;
 import org.apache.mina.core.session.IoSession;
-
+/**
+ * @author KING
+ * @create time 2018.11.13
+ */
 public class MinaServerHandlerContract {
 
     public interface View extends BaseView{
-        void requestAddIoSession(String result);
-        void requestDeleteIoSession(String result);
-        void requestSendMessage(String result);
-        void requestUpdataIoSession(String result);
-        void requestAllIoSession();
+        void setResult(String result);
     }
 
     public interface Model{

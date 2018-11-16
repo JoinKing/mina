@@ -4,8 +4,10 @@ import base.BasePresenter;
 import contract.MinaServerHandlerContract;
 import model.MinaServerHandlerModel;
 import org.apache.mina.core.session.IoSession;
-import utils.log;
-
+/**
+ * @author KING
+ * @create time 2018.11.13
+ */
 public class MinaServerHandlerPersenter extends BasePresenter<MinaServerHandlerContract.View> {
     private MinaServerHandlerContract.Model model;
     private MinaServerHandlerContract.View view;

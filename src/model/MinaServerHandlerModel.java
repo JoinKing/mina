@@ -13,6 +13,11 @@ import utils.log;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author KING
+ * @create time 2018.11.13
+ */
+
 public class MinaServerHandlerModel implements MinaServerHandlerContract.Model {
 
     private LinkedList<MinaServerHandlerBean> list = new LinkedList<>();
@@ -30,7 +35,7 @@ public class MinaServerHandlerModel implements MinaServerHandlerContract.Model {
         minaServerHandlerBean.setSession(session);
         minaServerHandlerBean.setuId("-1");
         list.add(minaServerHandlerBean);
-        view.requestAddIoSession(session.getId() + "已经上线!");
+        view.setResult(session.getId() + "已经上线!");
     }
 
     /**
@@ -41,7 +46,7 @@ public class MinaServerHandlerModel implements MinaServerHandlerContract.Model {
      */
     @Override
     public void resultDeleteIoSession(MinaServerHandlerContract.View view, IoSession session) {
-        log.e("用户" + session.getId() + ",已经下线.");
+        view.setResult("用户" + session.getId() + ",已经下线.");
         if (list.size() > 0) {
             list.remove(session);
         } else {
@@ -59,7 +64,7 @@ public class MinaServerHandlerModel implements MinaServerHandlerContract.Model {
      */
     @Override
     public void resultSendAllMessage(MinaServerHandlerContract.View view, IoSession session, Object message) {
-        log.e("00000all");
+        view.setResult("正在给所有用户发送消息");
 
     }
 
@@ -80,8 +85,12 @@ public class MinaServerHandlerModel implements MinaServerHandlerContract.Model {
          *
          */
         MsgCodeModel model = (MsgCodeModel) message;
-        log.e("服务器收到" + session.getId() + ",发来的消息，消息内容为" + new String(model.getBody()));
-        log.e("服务器收到" + session.getId() + ",发来的消息，消息体" + model.getHeader());
+        view.setResult("服务器收到" + session.getId() + ",发来的消息，消息内容为：" + new String(model.getBody()));
+        view.setResult("服务器收到" + session.getId() + ",发来的消息，消息体：" + model.getHeader());
+
+        for (int i = 0; i <list.size() ; i++) {
+            log.e(list.get(i).hashCode());
+        }
         //1.解析消息体（{"fileName":"","msgType":-1,"receiver":"","sender":"0001","bodyLength":0}）
         // 注意：msgType 1登陆 -1退出登陆 TEXT文本消息 IMAGE图片消息 VOICE语音消息
         try {
@@ -90,8 +99,7 @@ public class MinaServerHandlerModel implements MinaServerHandlerContract.Model {
             String msgType = header.optString("msgType");
             String receiver = header.optString("receiver");
             onSendMessage(msgType, model,receiver,sender,session);
-            log.e("当前在线用户数:" + list.size() + "");
-
+            view.setResult("当前在线用户数:" + list.size() + "人。");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,12 +120,20 @@ public class MinaServerHandlerModel implements MinaServerHandlerContract.Model {
                 session.close(true);
                 break;
             case TEXT:
-                IoBuffer ioBuffer = EditDataModel.init().sendData(model.getHeader(), model.getBody());
-                getReceiver(receiver).write(ioBuffer);
+                IoBuffer TEXT = EditDataModel.init().sendData(model.getHeader(), model.getBody());
+                getReceiver(receiver).write(TEXT);
                 break;
             case IMAGE:
+                //1.缓存文件操作（暂时未做缓存）
+                //2.转发消息
+                IoBuffer IMAGE = EditDataModel.init().sendData(model.getHeader(), model.getBody());
+                getReceiver(receiver).write(IMAGE);
                 break;
             case VOICE:
+                //1.缓存文件操作（暂时未做缓存）
+                //2.转发消息
+                IoBuffer VOICE = EditDataModel.init().sendData(model.getHeader(), model.getBody());
+                getReceiver(receiver).write(VOICE);
                 break;
         }
     }

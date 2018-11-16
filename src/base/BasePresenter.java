@@ -3,7 +3,7 @@ package base;
 import java.lang.ref.WeakReference;
 
 /**
- * Created by hxb on 2017/12/7.
+ * Created by king on 2017/12/7.
  */
 
 public abstract class BasePresenter<T> {
