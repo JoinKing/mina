@@ -10,5 +10,8 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="open_sdk_r6008_lite" level="project" />
     <orderEntry type="library" name="json" level="project" />
+    <orderEntry type="library" name="json" level="project" />
+    <orderEntry type="library" name="mina-core-2.0.19" level="project" />
+    <orderEntry type="library" name="slf4j-api-1.7.25" level="project" />
   </component>
 </module>

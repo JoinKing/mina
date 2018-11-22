@@ -1,7 +1,5 @@
 package filter;
 
-import filter.Decodex;
-import filter.Encodex;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFactory;
 import org.apache.mina.filter.codec.ProtocolDecoder;

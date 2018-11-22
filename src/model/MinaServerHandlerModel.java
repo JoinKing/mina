@@ -98,7 +98,16 @@ public class MinaServerHandlerModel implements MinaServerHandlerContract.Model {
             String sender = header.optString("sender");
             String msgType = header.optString("msgType");
             String receiver = header.optString("receiver");
-            onSendMessage(msgType, model,receiver,sender,session);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    onSendMessage(msgType, model,receiver,sender,session);
+                }
+            }).start();
+
+
+
             view.setResult("当前在线用户数:" + list.size() + "人。");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -117,7 +126,7 @@ public class MinaServerHandlerModel implements MinaServerHandlerContract.Model {
                 onCacheUser(sender, list, session);//缓存用户session
                 break;
             case EXIT:
-                session.close(true);
+                session.closeNow();
                 break;
             case TEXT:
                 IoBuffer TEXT = EditDataModel.init().sendData(model.getHeader(), model.getBody());

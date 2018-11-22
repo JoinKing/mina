@@ -22,7 +22,7 @@ public class MinaServer {
 			// 设置过滤器（使用mina提供的文本换行符编解码器）
 			acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new CodingProtocol()));
 			// 设置读取数据的换从区大小
-			acceptor.getSessionConfig().setReadBufferSize(2048);
+			acceptor.getSessionConfig().setReadBufferSize(1024);
 			// 读写通道10秒内无操作进入空闲状态
 			acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 10);
 			// 为接收器设置管理服务
